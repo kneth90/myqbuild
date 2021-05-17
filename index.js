@@ -120,7 +120,7 @@ class Qbuild{
 
         /* limit */
         let query_limit = ''
-        if(this._limit.length > 0)  query_limit = ` LIMIT ${this._limit[0][0]}, ${this._limit[0][1]}`
+        if(this._limit.length > 0)  query_limit = ` LIMIT ${this._limit[0][0]} OFFSET ${this._limit[0][1]}`
 
             /* return */
         return `SELECT ${query_select} FROM ${this.main_table} ${query_join} ${query_where} ${query_groupby} ${query_orderby} ${query_limit}`;
