@@ -11,6 +11,7 @@ class Qbuild{
         this._groupby = [];
         this._wherein = [];
         this._orderby = [];
+        this._limit = [];
     }
 
     select(params){
@@ -49,6 +50,11 @@ class Qbuild{
         else{
             this._groupby.push(...param);
         }
+        return this;
+    }
+
+    limit(lim, off = 0){
+        this._limit[0] = [lim, off];
         return this;
     }
 
@@ -112,8 +118,12 @@ class Qbuild{
             return accm;
         }, '')
 
+        /* limit */
+        let query_limit = ''
+        if(this._limit.length > 0)  query_limit = ` LIMIT ${this._limit[0][0]}, ${this._limit[0][1]}`
+
             /* return */
-        return `SELECT ${query_select} FROM ${this.main_table} ${query_join} ${query_where} ${query_groupby} ${query_orderby}`;
+        return `SELECT ${query_select} FROM ${this.main_table} ${query_join} ${query_where} ${query_groupby} ${query_orderby} ${query_limit}`;
     }
 }
 
