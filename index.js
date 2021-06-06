@@ -95,8 +95,12 @@ class Qbuild{
         query_where = query_where != '' ? ` WHERE ${query_where}` : '';
 
         /* whereIn */
+        let awal_qwherein = ''
         if(query_where != ''){
-            query_where += ' AND '
+            awal_qwherein += ' AND '
+        }
+        else{
+            awal_qwherein += ' WHERE '
         }
         query_where += ' ' + this._wherein.reduce((accm, val) => {
             if(accm != '')  accm += ' AND ';
@@ -110,7 +114,7 @@ class Qbuild{
             }, '')
             accm += `${val[0]} ${val[2] ? 'not' : ''} in (${whereinvalue})`
             return accm;
-        }, '')
+        }, awal_qwherein)
         
 
         /* order by */
