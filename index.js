@@ -96,20 +96,22 @@ class Qbuild{
 
         /* whereIn */
         if(query_where != ''){
-            query_where += ' ' + this._wherein.reduce((accm, val) => {
-                if(accm != '')  accm += ' AND ';
-                const whereinvalue = val[1].reduce((accm2, val2) => {
-                    if (accm2 != '') accm2 += ' , ';
-
-                    if(typeof val2 === 'string')    accm2 += ` '${val2}' `;
-                    else accm2 += ` ${val2} `;
-
-                    return accm2;
-                }, '')
-                accm += `${val[0]} ${val[2] ? 'not' : ''} in (${whereinvalue})`
-                return accm;
-            }, '')
+            query_where += ' AND '
         }
+        query_where += ' ' + this._wherein.reduce((accm, val) => {
+            if(accm != '')  accm += ' AND ';
+            const whereinvalue = val[1].reduce((accm2, val2) => {
+                if (accm2 != '') accm2 += ' , ';
+
+                if(typeof val2 === 'string')    accm2 += ` '${val2}' `;
+                else accm2 += ` ${val2} `;
+
+                return accm2;
+            }, '')
+            accm += `${val[0]} ${val[2] ? 'not' : ''} in (${whereinvalue})`
+            return accm;
+        }, '')
+        
 
         /* order by */
         let query_orderby = this._orderby.reduce((accm, v) => {
