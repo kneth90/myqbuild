@@ -99,7 +99,7 @@ class Qbuild{
             query_where += ' ' + this._wherein.reduce((accm, val) => {
                 if(accm != '')  accm += ' AND ';
                 const whereinvalue = val[1].reduce((accm2, val2) => {
-                    if (val2 != '') accm2 += ' , ';
+                    if (accm2 != '') accm2 += ' , ';
 
                     if(typeof val2 === 'string')    accm2 += ` '${val2}' `;
                     else accm2 += ` ${val2} `;
