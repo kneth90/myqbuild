@@ -95,14 +95,8 @@ class Qbuild{
         query_where = query_where != '' ? ` WHERE ${query_where}` : '';
 
         /* whereIn */
-        let awal_qwherein = ''
-        if(query_where != ''){
-            awal_qwherein += ' AND '
-        }
-        else{
-            awal_qwherein += ' WHERE '
-        }
-        query_where += ' ' + this._wherein.reduce((accm, val) => {
+
+        let query_where_in = ' ' + this._wherein.reduce((accm, val) => {
             if(accm != '')  accm += ' AND ';
             const whereinvalue = val[1].reduce((accm2, val2) => {
                 if (accm2 != '') accm2 += ' , ';
@@ -114,7 +108,14 @@ class Qbuild{
             }, '')
             accm += `${val[0]} ${val[2] ? 'not' : ''} in (${whereinvalue})`
             return accm;
-        }, awal_qwherein)
+        }, '')
+
+        if(query_where != ''){
+            query_where += query_where_in != ' ' ? ` AND ${query_where_in}` : ''
+        }
+        else{
+            query_where += `WHERE ${query_where_in}`
+        }
         
 
         /* order by */
